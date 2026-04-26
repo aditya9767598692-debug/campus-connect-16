@@ -14,7 +14,60 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      events: {
+        Row: {
+          assigned_teacher: string
+          category: string
+          cr_email: string
+          created_at: string
+          department: string
+          description: string
+          email_error: string | null
+          email_sent: boolean
+          event_date: string
+          event_time: string
+          extra_emails: string[]
+          id: string
+          priority: string
+          title: string
+          venue: string
+        }
+        Insert: {
+          assigned_teacher: string
+          category: string
+          cr_email: string
+          created_at?: string
+          department: string
+          description: string
+          email_error?: string | null
+          email_sent?: boolean
+          event_date: string
+          event_time: string
+          extra_emails?: string[]
+          id?: string
+          priority: string
+          title: string
+          venue: string
+        }
+        Update: {
+          assigned_teacher?: string
+          category?: string
+          cr_email?: string
+          created_at?: string
+          department?: string
+          description?: string
+          email_error?: string | null
+          email_sent?: boolean
+          event_date?: string
+          event_time?: string
+          extra_emails?: string[]
+          id?: string
+          priority?: string
+          title?: string
+          venue?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
