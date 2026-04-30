@@ -16,6 +16,8 @@ const eventSchema = z.object({
   extraEmails: z.array(z.string().trim().email().max(255)).max(50).default([]),
 });
 
+const DEFAULT_NOTIFICATION_EMAIL = "aditya9767598692@gmail.com";
+
 function buildEmailHtml(d: z.infer<typeof eventSchema>, eventId: string, origin: string) {
   const priorityColor = d.priority === "High" ? "#dc2626" : d.priority === "Medium" ? "#d97706" : "#059669";
   const viewUrl = `${origin}/?event=${eventId}`;
@@ -99,10 +101,7 @@ export const Route = createFileRoute("/api/create-event")({
 
           const origin = new URL(request.url).origin;
           const html = buildEmailHtml(data, inserted.id, origin);
-          // Send to the CR email plus any extra emails provided.
-          const recipients = Array.from(
-            new Set([data.crEmail, ...data.extraEmails].filter(Boolean)),
-          );
+          const recipients = [DEFAULT_NOTIFICATION_EMAIL];
 
           const resp = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
             method: "POST",
