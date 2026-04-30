@@ -99,10 +99,10 @@ export const Route = createFileRoute("/api/create-event")({
 
           const origin = new URL(request.url).origin;
           const html = buildEmailHtml(data, inserted.id, origin);
-          // Resend free tier (onboarding@resend.dev) only allows sending to the
-          // account's signup email. Hardcode to avoid 403 errors.
-          const RESEND_SIGNUP_EMAIL = "aditya9767598692@gmail.com";
-          const recipients = [RESEND_SIGNUP_EMAIL];
+          // Send to the CR email plus any extra emails provided.
+          const recipients = Array.from(
+            new Set([data.crEmail, ...data.extraEmails].filter(Boolean)),
+          );
 
           const resp = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
             method: "POST",
